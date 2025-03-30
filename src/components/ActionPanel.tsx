@@ -1,4 +1,5 @@
 import React from 'react';
+import {Button} from "@/components/ui/button";
 
 interface ActionPanelProps {
 	status: string;
@@ -13,32 +14,18 @@ export const ActionPanel: React.FC<ActionPanelProps> = ({status, onStart, onHit,
 
 	return (
 		<div className="flex justify-center gap-4 flex-wrap">
-			<button
-				className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded"
-				onClick={onStart}
-			>
-				Start Game
-			</button>
-			<button
-				className="bg-yellow-600 hover:bg-yellow-700 px-4 py-2 rounded disabled:opacity-40"
-				onClick={onHit}
-				disabled={!isPlaying}
-			>
-				Hit
-			</button>
-			<button
-				className="bg-orange-600 hover:bg-orange-700 px-4 py-2 rounded disabled:opacity-40"
-				onClick={onStand}
-				disabled={!isPlaying}
-			>
-				Stand
-			</button>
-			<button
-				className="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded"
-				onClick={onReset}
-			>
-				Reset
-			</button>
+			<Button variant="default" onClick={onStart}>
+				🎮 Start Game
+			</Button>
+			<Button variant="secondary" onClick={onHit} disabled={!isPlaying}>
+				➕ Hit
+			</Button>
+			<Button variant="destructive" onClick={onStand} disabled={!isPlaying}>
+				✋ Stand
+			</Button>
+			<Button variant="outline" onClick={onReset}>
+				🔄 Reset
+			</Button>
 		</div>
 	);
 };
