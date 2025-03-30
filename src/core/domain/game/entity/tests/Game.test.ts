@@ -56,8 +56,9 @@ describe('Game', () => {
 		dealer.getHand().addCard({ getPoints: () => [6], toString: () => '6 of Spades' } as never);
 		dealer.getHand().addCard({ getPoints: () => [5], toString: () => '5 of Spades' } as never);
 
-		// Skip actual play() logic since we’re forcing dealer state
-		(game as any).status = 'finished';
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+		// @ts-expect-error
+		game.status = 'finished';
 
 		expect(game.getWinner()).toBe('dealer');
 	});
