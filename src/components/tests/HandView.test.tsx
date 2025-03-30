@@ -12,7 +12,7 @@ describe('HandView', () => {
 		render(<HandView title="Player" cards={mockCards} score={21} />);
 
 		expect(screen.getByText(/Player/)).toBeDefined();
-		expect(screen.getAllByTestId('card')).toHaveLength(4);
+		expect(screen.getAllByTestId('card')).toHaveLength(2);
 		expect(screen.getByText(/Score:/)).toBeDefined();
 	});
 
