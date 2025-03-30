@@ -1,5 +1,5 @@
-import {Card} from "@/core/domain/deck/value-object/card/Card.vo";
-import {Game} from "@/core/domain/game/entity/Game.entity";
+import {Card} from "@/core/domain/value-object/Card.vo";
+import {Game} from "@/core/domain/aggregator/Game.entity";
 
 export type CardDTO = {
 	suit: string;

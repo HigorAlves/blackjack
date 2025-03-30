@@ -1,6 +1,6 @@
-import {Hand} from "@/core/domain/hand/entity/Hand";
-import {Deck} from "@/core/domain/deck/entity/Deck.entity";
-import {Card} from "@/core/domain/deck/value-object/card/Card.vo";
+import {Hand} from "@/core/domain/entity/Hand";
+import {Deck} from "@/core/domain/entity/Deck.entity";
+import {Card} from "@/core/domain/value-object/Card.vo";
 
 export class Dealer {
 	private hand: Hand = new Hand();

@@ -1,4 +1,4 @@
-import {Card} from "@/core/domain/deck/value-object/card/Card.vo";
+import {Card} from "@/core/domain/value-object/Card.vo";
 
 export class Hand {
 	private cards: Card[] = [];

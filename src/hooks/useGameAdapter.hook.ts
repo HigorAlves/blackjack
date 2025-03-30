@@ -4,7 +4,7 @@ import {PlayerHit} from "@/core/application/use-cases/PlayerHit.useCase";
 import {PlayerStand} from "@/core/application/use-cases/PlayerStand.useCase";
 import {ResetGame} from "@/core/application/use-cases/ResetGame.useCase";
 import {EvaluateWinner} from "@/core/application/use-cases/EvaluateWinner.useCase";
-import {Game} from "@/core/domain/game/entity/Game.entity";
+import {Game} from "@/core/domain/aggregator/Game.entity";
 
 
 export const useGameAdapter = () => {

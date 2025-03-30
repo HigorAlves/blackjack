@@ -1,6 +1,6 @@
-import {Deck} from "@/core/domain/deck/entity/Deck.entity";
-import {Player} from "@/core/domain/player/entity/Player.entity";
-import {Dealer} from "@/core/domain/dealer/entity/Dealer.entity";
+import {Deck} from "@/core/domain/entity/Deck.entity";
+import {Player} from "@/core/domain/entity/Player.entity";
+import {Dealer} from "@/core/domain/entity/Dealer.entity";
 
 export type GameStatus = 'waiting' | 'in_progress' | 'player_standing' | 'finished';
 

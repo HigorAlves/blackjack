@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import {Deck} from "@/core/domain/deck/entity/Deck.entity";
-import {Dealer} from "@/core/domain/dealer/entity/Dealer.entity";
+import {Deck} from "@/core/domain/entity/Deck.entity";
+import {Dealer} from "@/core/domain/entity/Dealer.entity";
 
 describe('Dealer', () => {
 	let deck: Deck;

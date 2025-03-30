@@ -1,4 +1,4 @@
-import {Game} from "@/core/domain/game/entity/Game.entity";
+import {Game} from "@/core/domain/aggregator/Game.entity";
 
 export type GameResult = 'player' | 'dealer' | 'draw';
 

@@ -1,5 +1,5 @@
-import {Hand} from "@/core/domain/hand/entity/Hand";
-import {Card} from "@/core/domain/deck/value-object/card/Card.vo";
+import {Hand} from "@/core/domain/entity/Hand";
+import {Card} from "@/core/domain/value-object/Card.vo";
 
 export class Player {
 	private hand: Hand = new Hand();

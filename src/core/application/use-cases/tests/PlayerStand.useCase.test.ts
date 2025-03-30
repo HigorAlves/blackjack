@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import {Game} from "@/core/domain/game/entity/Game.entity";
+import {Game} from "@/core/domain/aggregator/Game.entity";
 import {StartGame} from "@/core/application/use-cases/StartGame.useCase";
 import {PlayerStand} from "@/core/application/use-cases/PlayerStand.useCase";
 

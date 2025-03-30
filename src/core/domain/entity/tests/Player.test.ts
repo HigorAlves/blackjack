@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import {Player} from "@/core/domain/player/entity/Player.entity";
-import {Card} from "@/core/domain/deck/value-object/card/Card.vo";
+import {Player} from "@/core/domain/entity/Player.entity";
+import {Card} from "@/core/domain/value-object/Card.vo";
 
 describe('Player', () => {
 	let player: Player;

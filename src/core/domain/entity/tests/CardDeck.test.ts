@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import {Deck} from "@/core/domain/deck/entity/Deck.entity";
+import {Deck} from "@/core/domain/entity/Deck.entity";
 
 describe('Deck', () => {
 	it('should initialize with 52 cards', () => {
