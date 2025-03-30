@@ -17,6 +17,7 @@ import React, {
   useRef,
 } from "react";
 
+// @ts-expect-error magicui lib error
 import { Button, ButtonProps } from "@/components/ui/button";
 
 type Api = {

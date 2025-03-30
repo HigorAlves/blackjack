@@ -6,7 +6,6 @@ import {ResetGame} from "@/core/application/use-cases/ResetGame.useCase";
 import {EvaluateWinner} from "@/core/application/use-cases/EvaluateWinner.useCase";
 import {Game} from "@/core/domain/aggregator/Game.entity";
 
-
 export const useGameAdapter = () => {
 	const [game] = useState(() => new Game());
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
