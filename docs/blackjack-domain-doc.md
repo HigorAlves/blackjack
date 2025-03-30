@@ -1,23 +1,22 @@
-# 🂡 Blackjack Game Domain
+# 🂡 Blackjack Game - Domain & Architecture
 
 ## 🎯 Objective
-Implement a Blackjack game using Next.js and TypeScript, following Domain-Driven Design (DDD) and Hexagonal Architecture. This document defines the core domain, bounded contexts, entities, and game rules that will drive the design and implementation.
+
+This project implements a Blackjack game using **Next.js**, **TypeScript**, and follows **Domain-Driven Design (DDD)** with **Hexagonal Architecture**. The system is layered with clear separation of concerns and driven by explicit use cases.
 
 ---
 
 ## 🧠 Game Rules (Ubiquitous Language)
 
-- The goal is to have a hand total as close to 21 as possible without going over.
-- Players are dealt two cards initially.
-- The player can choose to **Hit** (draw a card) or **Stand** (end turn).
-- Face cards (Jack, Queen, King) are worth 10 points.
-- Cards 2-10 are worth their face value.
-- Aces can be worth 11 points, but if that causes a bust, they count as 1.
-- The dealer reveals one card and draws until their total is **17 or higher**.
-- If the player busts (goes over 21), they lose.
-- If the dealer busts and the player doesn’t, the player wins.
-- If neither busts, the hand with the highest score wins.
-- Ties are a draw.
+- The objective is to get a hand total as close to 21 as possible without going over.
+- Numbered cards (2–10) are worth their face value.
+- Face cards (J, Q, K) are worth 10.
+- Aces are worth 1 or 11, whichever benefits the hand.
+- A "Blackjack" is exactly 21 with the first 2 cards.
+- If a hand exceeds 21, it's a **bust**.
+- The dealer draws until reaching a minimum score of 17.
+- If both hands are ≤ 21, the highest score wins.
+- Tie scores are a draw.
 
 ---
 
@@ -25,154 +24,128 @@ Implement a Blackjack game using Next.js and TypeScript, following Domain-Driven
 
 ```mermaid
 classDiagram
-    class CardEntity {
+    class Card {
         +Suit: string
         +Value: string
-        +getPoints(): number
+        +getPoints(): number[]
     }
 
     class Deck {
-        -cards: CardEntity[]
+        -cards: Card[]
         +shuffle(): void
-        +draw(): CardEntity
+        +draw(): Card
+        +cardsLeft(): number
     }
 
     class Hand {
-        -cards: CardEntity[]
-        +addCard(card: CardEntity): void
-        +getTotal(): number
+        +addCard(card): void
+        +getTotals(): number[]
+        +getBestScore(): number
         +isBust(): boolean
         +hasBlackjack(): boolean
     }
 
     class Player {
-        +hand: Hand
-        +isStanding: boolean
-        +hit(card: CardEntity): void
+        +hit(card): void
         +stand(): void
+        +reset(): void
     }
 
     class Dealer {
-        +hand: Hand
-        +play(deck: Deck): void
+        +play(deck): void
+        +reset(): void
     }
 
     class Game {
-        +player: Player
-        +dealer: Dealer
-        +deck: Deck
         +start(): void
         +playerHit(): void
         +playerStand(): void
-        +evaluateWinner(): string
+        +reset(): void
+        +getWinner(): string
     }
 
-    CardEntity --> Deck
-    Deck --> Game
-    Hand --> Player
-    Hand --> Dealer
-    Player --> Game
-    Dealer --> Game
+    Game --> Player
+    Game --> Dealer
+    Game --> Deck
+    Player --> Hand
+    Dealer --> Hand
+    Deck --> Card
 ```
 
 ---
 
-## 🧭 Domain-Driven Design (DDD)
+## 🔁 Application Use Cases
 
-### 💡 Core Domain
-The core domain is the **Game** logic, including rules for scoring, busting, standing, and determining a winner.
+| Use Case         | Description                                                 |
+|------------------|-------------------------------------------------------------|
+| `StartGame`       | Initializes game, deals two cards to each participant       |
+| `PlayerHit`       | Draws a card for the player; finishes game if player busts  |
+| `PlayerStand`     | Locks player, triggers dealer to play, ends game            |
+| `EvaluateWinner`  | Returns result: `'player' | 'dealer' | 'draw'`              |
+| `ResetGame`       | Resets all state (deck, player, dealer) for a fresh start   |
 
-### 📦 Bounded Contexts
-- **GameContext**: Handles gameplay, game state, and turn logic.
-- **DeckContext**: Manages deck generation and card draws.
-- **UIContext (Adapter)**: Interacts with user actions (start, hit, stand).
+Each use case follows the `execute()` convention and receives the `Game` aggregate as its dependency.
 
 ---
 
-## 🧩 Hexagonal Architecture (Ports & Adapters)
+## 🧪 Test Coverage
+
+All domain logic and use cases are covered with **Vitest** unit tests, including:
+- `Card`, `Deck`, `Hand`
+- `Player`, `Dealer`
+- `Game` and all game rules
+- `StartGame`, `PlayerHit`, `PlayerStand`, `EvaluateWinner`, `ResetGame`
+
+Tests are colocated inside `/tests/` folders under each domain module.
+
+---
+
+## 🧩 Hexagonal Architecture
 
 ```mermaid
 flowchart TD
-    subgraph Application Core
-        GameService
-        Player
-        Dealer
-        Hand
-        CardEntity
-        Deck
-    end
+  UIAdapter[UI / Controller / API] -->|calls| UseCaseLayer
+  subgraph UseCaseLayer
+    StartGame
+    PlayerHit
+    PlayerStand
+    EvaluateWinner
+    ResetGame
+  end
 
-    subgraph Primary Ports
-        UI --> GameService
-    end
+  subgraph Domain
+    Game --> Player
+    Game --> Dealer
+    Game --> Deck
+    Dealer --> Hand
+    Player --> Hand
+    Deck --> Card
+  end
 
-    subgraph Secondary Ports
-        GameService --> UIRenderer
-    end
-
-    classDef hex fill:#f9f,stroke:#333,stroke-width:2px;
-    class GameService hex
+  UseCaseLayer --> Domain
 ```
 
----
-
-## ✅ Acceptance Criteria
-
-- [ ] The player can start a new game.
-- [ ] The player can hit to draw cards.
-- [ ] The player can stand to end their turn.
-- [ ] The dealer plays automatically after the player stands.
-- [ ] The game announces a winner (Player, Dealer, or Draw).
-- [ ] All game logic follows Blackjack rules precisely.
+- **UI/Controllers** call use cases
+- **Use cases** orchestrate domain behavior
+- **Domain** holds all business rules and logic
 
 ---
 
-## 🗂 Folder Structure
-
-```bash
-src/
-├── core/                          # Domain Layer (Pure logic, framework-agnostic)
-│   ├── game/                      # Application service and game rules
-│   │   ├── application/           # Game orchestrator logic (use cases)
-|   |   │   ├── StartGame.ts
-|   |   │   ├── PlayerHit.ts
-|   |   │   ├── PlayerStand.ts
-|   |   │   ├── EvaluateWinner.ts
-|   |   │   └── ResetGame.ts
-│   │   ├── domain/                # Domain models & business rules
-│   │   │   ├── Game.ts
-│   │   │   ├── GameRules.ts
-│   │   │   └── GameEvents.ts
-│   │   └── services/              # Domain services (e.g., scoring, game resolution)
-│   ├── player/                    # Player entity and behavior
-│   │   ├── domain/
-│   │   │   └── Player.ts
-│   ├── dealer/                    # Dealer entity and AI logic
-│   │   ├── domain/
-│   │   │   └── Dealer.ts
-│   ├── deck/                      # Deck and card logic
-│   │   ├── domain/
-│   │   │   ├── CardEntity.ts
-│   │   │   ├── Deck.ts
-│   │   │   └── Hand.ts
-│   └── shared/                    # Value objects, enums, types
-│       ├── CardSuit.ts
-│       ├── CardValue.ts
-│       └── Result.ts              # Generic result wrapper for functional error handling
-├── adapters/                      # UI framework-specific or external world adapters
-│   └── ui/                        # React components or pages
-├── ports/                         # Port interfaces (used by application layer)
-│   ├── input/                     # Commands, events, user-driven actions
-│   └── output/                    # Interfaces to external systems (e.g., renderer)
-├── app/                           # Next.js pages, serverless handlers, etc.
-├── shared/                        # Shared utilities, types, helpers
-└── index.ts                       # App entry point
-```
+## 📦 Folder Structure (Simplified)
 
 ---
 
-## 📎 Notes
+## 🔌 Ports & Adapters (planned)
 
-- Use dependency injection to decouple services.
-- The domain layer must be completely framework-agnostic.
-- Testing will focus primarily on domain logic with unit tests.
+To complete the hexagonal design:
+- `UI Adapter` will map user inputs to use case calls
+- `Output Adapter` will render game state and winner
+- Game state will be exposed via a clean `GameStateDTO` (optional)
+
+---
+
+## 🗂 Next Steps
+
+- [ ] Wire up the use cases into a UI adapter (React/Next.js)
+- [ ] Build a presenter/controller to call `StartGame`, `PlayerHit`, etc.
+- [ ] Add state serialization (`GameStateDTO`)
