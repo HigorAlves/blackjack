@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import {Hand} from "@/core/domain/hand/entity/Hand";
-import {Card} from "@/core/domain/card/entity/Card.entity";
+import {Card} from "@/core/domain/deck/value-object/card/Card.vo";
 
 describe('Hand', () => {
 	it('should add cards and return them', () => {

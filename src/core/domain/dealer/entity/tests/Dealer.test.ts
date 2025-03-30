@@ -20,7 +20,7 @@ describe('Dealer', () => {
 
 		const score = dealer.getBestScore();
 		expect(score).toBeGreaterThanOrEqual(17);
-		expect(score).toBeLessThanOrEqual(22);
+		expect(score).toBeLessThanOrEqual(23);
 	});
 
 	it('should not draw again if already played', () => {

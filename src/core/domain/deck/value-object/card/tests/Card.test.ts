@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import {Card} from "@/core/domain/card/entity/Card.entity";
+import {Card} from "@/core/domain/deck/value-object/card/Card.vo";
 
 describe('Card', () => {
 	it('should return correct points for number cards', () => {
