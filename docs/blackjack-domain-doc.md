@@ -25,21 +25,21 @@ Implement a Blackjack game using Next.js and TypeScript, following Domain-Driven
 
 ```mermaid
 classDiagram
-    class Card {
+    class CardEntity {
         +Suit: string
         +Value: string
         +getPoints(): number
     }
 
     class Deck {
-        -cards: Card[]
+        -cards: CardEntity[]
         +shuffle(): void
-        +draw(): Card
+        +draw(): CardEntity
     }
 
     class Hand {
-        -cards: Card[]
-        +addCard(card: Card): void
+        -cards: CardEntity[]
+        +addCard(card: CardEntity): void
         +getTotal(): number
         +isBust(): boolean
         +hasBlackjack(): boolean
@@ -48,7 +48,7 @@ classDiagram
     class Player {
         +hand: Hand
         +isStanding: boolean
-        +hit(card: Card): void
+        +hit(card: CardEntity): void
         +stand(): void
     }
 
@@ -67,7 +67,7 @@ classDiagram
         +evaluateWinner(): string
     }
 
-    Card --> Deck
+    CardEntity --> Deck
     Deck --> Game
     Hand --> Player
     Hand --> Dealer
@@ -98,7 +98,7 @@ flowchart TD
         Player
         Dealer
         Hand
-        Card
+        CardEntity
         Deck
     end
 
@@ -147,7 +147,7 @@ src/
 │   │   │   └── Dealer.ts
 │   ├── deck/                      # Deck and card logic
 │   │   ├── domain/
-│   │   │   ├── Card.ts
+│   │   │   ├── CardEntity.ts
 │   │   │   ├── Deck.ts
 │   │   │   └── Hand.ts
 │   └── shared/                    # Value objects, enums, types

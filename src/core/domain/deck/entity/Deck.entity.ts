@@ -1,4 +1,4 @@
-import { Card, CardSuit, CardValue } from './Card';
+import {Card, CardSuit, CardValue} from "@/core/domain/card/entity/Card.entity";
 
 export class Deck {
 	private cards: Card[] = [];
