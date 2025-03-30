@@ -29,17 +29,19 @@ describe('useCases', () => {
 			// Force player: 10 + 8 = 18
 			const player = game.getPlayer();
 			player.reset();
-			player.hit({ getPoints: () => [10], toString: () => '10' } as any);
-			player.hit({ getPoints: () => [8], toString: () => '8' } as any);
+			player.hit({ getPoints: () => [10], toString: () => '10' } as never);
+			player.hit({ getPoints: () => [8], toString: () => '8' } as never);
 
 			// Force dealer bust: 10 + 10 + 5 = 25
 			const dealer = game.getDealer();
 			dealer.reset();
-			dealer.getHand().addCard({ getPoints: () => [10], toString: () => '10' } as any);
-			dealer.getHand().addCard({ getPoints: () => [10], toString: () => '10' } as any);
-			dealer.getHand().addCard({ getPoints: () => [5], toString: () => '5' } as any);
+			dealer.getHand().addCard({ getPoints: () => [10], toString: () => '10' } as never);
+			dealer.getHand().addCard({ getPoints: () => [10], toString: () => '10' } as never);
+			dealer.getHand().addCard({ getPoints: () => [5], toString: () => '5' } as never);
 
-			(game as any).status = 'finished';
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-expect-error
+			game.status = 'finished';
 
 			const result = new EvaluateWinner(game).execute();
 			expect(result).toBe('player');

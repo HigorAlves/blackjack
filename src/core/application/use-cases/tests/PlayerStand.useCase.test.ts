@@ -22,7 +22,9 @@ describe('useCases', () => {
 		});
 
 		it('should not allow standing if game is not in progress', () => {
-			(game as any).status = 'finished';
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-expect-error
+			game.status = 'finished';
 			const playerStand = new PlayerStand(game);
 
 			expect(() => playerStand.execute()).toThrowError('Cannot stand unless game is in progress.');
