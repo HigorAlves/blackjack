@@ -81,4 +81,11 @@ export class Game {
 		if (dealerScore > playerScore) return 'dealer';
 		return 'draw';
 	}
+
+	reset(): void {
+		this.player.reset();
+		this.dealer.reset();
+		this.deck = new Deck();
+		this.status = 'waiting';
+	}
 }

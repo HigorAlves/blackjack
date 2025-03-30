@@ -134,6 +134,11 @@ src/
 ├── core/                          # Domain Layer (Pure logic, framework-agnostic)
 │   ├── game/                      # Application service and game rules
 │   │   ├── application/           # Game orchestrator logic (use cases)
+|   |   │   ├── StartGame.ts
+|   |   │   ├── PlayerHit.ts
+|   |   │   ├── PlayerStand.ts
+|   |   │   ├── EvaluateWinner.ts
+|   |   │   └── ResetGame.ts
 │   │   ├── domain/                # Domain models & business rules
 │   │   │   ├── Game.ts
 │   │   │   ├── GameRules.ts
