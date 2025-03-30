@@ -56,7 +56,7 @@ describe('Game', () => {
 		dealer.getHand().addCard({ getPoints: () => [6], toString: () => '6 of Spades' } as never);
 		dealer.getHand().addCard({ getPoints: () => [5], toString: () => '5 of Spades' } as never);
 
-		 
+
 		// @ts-expect-error We need to change to use a get
 		game.status = 'finished';
 
@@ -76,7 +76,7 @@ describe('Game', () => {
 		dealer.getHand().addCard({ getPoints: () => [10], toString: () => '10 of Diamonds' } as never);
 		dealer.getHand().addCard({ getPoints: () => [7], toString: () => '7 of Hearts' } as never);
 
-		// @ts-expect-error
+		// @ts-expect-error We need to change to use a get
 		game.status = 'finished';
 
 		expect(game.getWinner()).toBe('draw');
