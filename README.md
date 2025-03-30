@@ -1,36 +1,143 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ♠️ Blackjack Card Game
 
-## Getting Started
+A full-featured, test-driven implementation of the classic Blackjack game built with **Next.js**, **TypeScript**, **Vitest**, **Tailwind CSS**, and following **Domain-Driven Design (DDD)** and **Hexagonal Architecture** principles.
 
-First, run the development server:
+---
+
+## 🚀 Features
+
+- ♠️ Classic Blackjack rules
+- ✅ Fully typed domain with DDD modeling (Card, Deck, Hand, Game, etc.)
+- 🎯 Application-layer use cases (StartGame, PlayerHit, PlayerStand, EvaluateWinner, ResetGame)
+- 🧪 100% test coverage of domain, use cases, and UI with Vitest
+- 🧩 Modular React components powered by clean state adapter
+- 🎨 Tailwind CSS for styling
+- ⚡ Instant feedback via Turbo dev server
+
+---
+
+## 🧱 Domain Model
+
+```mermaid
+classDiagram
+    class Card {
+        +Suit: string
+        +Value: string
+        +getPoints(): number[]
+    }
+
+    class Deck {
+        -cards: Card[]
+        +shuffle(): void
+        +draw(): Card
+    }
+
+    class Hand {
+        +addCard(card): void
+        +getTotals(): number[]
+        +getBestScore(): number
+        +isBust(): boolean
+        +hasBlackjack(): boolean
+    }
+
+    class Player {
+        +hit(card): void
+        +stand(): void
+        +reset(): void
+    }
+
+    class Dealer {
+        +play(deck): void
+        +reset(): void
+    }
+
+    class Game {
+        +start(): void
+        +playerHit(): void
+        +playerStand(): void
+        +reset(): void
+        +getWinner(): string
+    }
+
+    Game --> Player
+    Game --> Dealer
+    Game --> Deck
+    Player --> Hand
+    Dealer --> Hand
+    Deck --> Card
+```
+
+---
+
+## 🧩 Architecture
+
+```mermaid
+flowchart TD
+  UIAdapter[UI: React Components] -->|calls| UseCases
+  subgraph UseCases
+    StartGame
+    PlayerHit
+    PlayerStand
+    EvaluateWinner
+    ResetGame
+  end
+
+  subgraph Domain
+    Game --> Player
+    Game --> Dealer
+    Game --> Deck
+    Player --> Hand
+    Dealer --> Hand
+    Deck --> Card
+  end
+
+  UseCases --> Domain
+```
+
+---
+
+## 🧪 Tests
+
+- Domain-level: Card, Deck, Hand, Player, Dealer, Game
+- Application-layer: All use cases
+- UI-layer: Components like `BlackjackBoard`, `HandView`, `StatusBar`, `ActionPanel`, etc.
+- Vitest + Testing Library
+
+---
+
+## 🧠 Folder Structure
+
+---
+
+## 🧪 Run Tests
+
+```bash
+npm install
+npm run test
+```
+
+---
+
+## 💻 Run Dev Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🧠 Tech Stack
 
-## Learn More
+- [x] Next.js (App Router)
+- [x] TypeScript
+- [x] Tailwind CSS
+- [x] Vitest + Testing Library
+- [x] DDD + Hexagonal Architecture
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📜 License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT
