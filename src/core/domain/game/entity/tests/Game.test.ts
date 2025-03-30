@@ -56,8 +56,8 @@ describe('Game', () => {
 		dealer.getHand().addCard({ getPoints: () => [6], toString: () => '6 of Spades' } as never);
 		dealer.getHand().addCard({ getPoints: () => [5], toString: () => '5 of Spades' } as never);
 
-		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-		// @ts-expect-error
+		 
+		// @ts-expect-error We need to change to use a get
 		game.status = 'finished';
 
 		expect(game.getWinner()).toBe('dealer');
