@@ -26,11 +26,21 @@ export type GameStateDTO = {
 	};
 };
 
-const mapCard = (card: Card): CardDTO => ({
-	suit: card.suit,
-	value: card.value,
-	display: card.toString(),
-});
+const mapCard = (card?: Card): CardDTO => {
+	if (!card) {
+		return {
+			suit: 'Hidden',
+			value: 'Hidden',
+			display: '🂠',
+		};
+	}
+
+	return {
+		suit: card.suit,
+		value: card.value,
+		display: card.toString(),
+	};
+};
 
 export const createGameStateDTO = (game: Game): GameStateDTO => {
 	const player = game.getPlayer();
