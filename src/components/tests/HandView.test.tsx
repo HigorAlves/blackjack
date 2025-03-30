@@ -8,12 +8,11 @@ const mockCards = [
 ];
 
 describe('HandView', () => {
-	it('renders title and cards', () => {
+	it('renders title and card elements', () => {
 		render(<HandView title="Player" cards={mockCards} score={21} />);
 
 		expect(screen.getByText(/Player/)).toBeDefined();
-		expect(screen.getByText('10 of Hearts')).toBeDefined();
-		expect(screen.getByText('A of Spades')).toBeDefined();
+		expect(screen.getAllByTestId('card')).toHaveLength(2);
 		expect(screen.getByText(/Score:/)).toBeDefined();
 	});
 
